@@ -5,35 +5,35 @@ import { useRef } from "react";
 
 import * as THREE from "three";
 
-export const Background = ({ backgroundColors }) => {
+export const GradientBackground = ({ backgroundColors }) => {
   const start = 0.2;
   const end = -0.5;
 
-  const gradientRef = useRef();
-  const gradientEnvRef = useRef();
+  const gradientRef = useRef(null);
+  const gradientEnvRef = useRef(null);
+
+  const colorA = new THREE.Color();
+  const colorB = new THREE.Color();
 
   useFrame(() => {
-    gradientRef.current.colorA = new THREE.Color(
-      backgroundColors.current.colorA
-    );
-    gradientRef.current.colorB = new THREE.Color(
-      backgroundColors.current.colorB
-    );
-    gradientEnvRef.current.colorA = new THREE.Color(
-      backgroundColors.current.colorA
-    );
-    gradientEnvRef.current.colorB = new THREE.Color(
-      backgroundColors.current.colorB
-    );
+    colorA.set(backgroundColors.current.colorA);
+    colorB.set(backgroundColors.current.colorB);
+    gradientRef.current.colorA = colorA;
+    gradientRef.current.colorB = colorB;
+    gradientEnvRef.current.colorA = colorA;
+    gradientEnvRef.current.colorB = colorB;
   });
 
   return (
     <>
+      {/* Large Sphere Background */}
       <Sphere scale={[500, 500, 500]} rotation-y={Math.PI / 2}>
         <LayerMaterial color={"#ffffff"} side={THREE.BackSide}>
           <Gradient ref={gradientRef} axes={"y"} start={start} end={end} />
         </LayerMaterial>
       </Sphere>
+
+      {/* Environment Sphere */}
       <Environment resolution={256} frames={Infinity}>
         <Sphere
           scale={[100, 100, 100]}

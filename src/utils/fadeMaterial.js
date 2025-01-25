@@ -21,13 +21,14 @@ const replaceFragmentShader = (fragmentShader) =>
       float y = pow(x, 1.0/(1.0-a));
       return y;
     }
-  }`
+  }
+  `
     )
-    .replace(
-      `vec4 diffuseColor = vec4( diffuse, opacity );`,
-      `
-float fadeDist = 350.0;
-float dist = length(vViewPosition);
+.replace(
+  `vec4 diffuseColor = vec4( diffuse, opacity );`,
+  `const fadeDist = 350.0;
+  float fadeDist = 350.0;
+  const dist = length(vViewPosition);
 
 float fadeOpacity = smoothstep(fadeDist, 0.0, dist);
 fadeOpacity = exponentialEasing(fadeOpacity, 0.93);

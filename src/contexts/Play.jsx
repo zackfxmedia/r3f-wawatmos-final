@@ -1,14 +1,16 @@
 import { createContext, useContext, useState } from "react";
 
-const Context = createContext();
+const PlayContext = createContext();
 
 export const PlayProvider = ({ children }) => {
+  // State to manage the play status
+  // State to track if the play session has ended
   const [play, setPlay] = useState(false);
   const [end, setEnd] = useState(false);
   const [hasScroll, setHasScroll] = useState(false);
 
   return (
-    <Context.Provider
+    <PlayContext.Provider
       value={{
         play,
         setPlay,
@@ -18,13 +20,12 @@ export const PlayProvider = ({ children }) => {
         setHasScroll,
       }}
     >
-      {children}
-    </Context.Provider>
+    </PlayContext.Provider>
   );
 };
 
 export const usePlay = () => {
-  const context = useContext(Context);
+  const context = useContext(PlayContext);
 
   if (context === undefined) {
     throw new Error("usePlay must be used within a PlayProvider");

@@ -1,7 +1,9 @@
 import { Float, PerspectiveCamera, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { gsap } from "gsap";
-import { useEffect, useLayoutEffect, useMemo, useRef } from "react";
+import { useEffect, useLayoutEffect } from "react";
+import { useMemo } from "react";
+import { useRef } from "react";
 import * as THREE from "three";
 import { Euler, Group, Vector3 } from "three";
 import { usePlay } from "../contexts/Play";
@@ -19,27 +21,25 @@ const CURVE_AHEAD_AIRPLANE = 0.02;
 const AIRPLANE_MAX_ANGLE = 35;
 const FRICTION_DISTANCE = 42;
 
+const curvePoints = [
+  new THREE.Vector3(0, 0, 0),
+  new THREE.Vector3(0, 0, -CURVE_DISTANCE),
+  new THREE.Vector3(100, 0, -2 * CURVE_DISTANCE),
+  new THREE.Vector3(-100, 0, -3 * CURVE_DISTANCE),
+  new THREE.Vector3(100, 0, -4 * CURVE_DISTANCE),
+  new THREE.Vector3(0, 0, -5 * CURVE_DISTANCE),
+  new THREE.Vector3(0, 0, -6 * CURVE_DISTANCE),
+  new THREE.Vector3(0, 0, -7 * CURVE_DISTANCE),
+];
+
 export const Experience = () => {
-  const curvePoints = useMemo(
-    () => [
-      new THREE.Vector3(0, 0, 0),
-      new THREE.Vector3(0, 0, -CURVE_DISTANCE),
-      new THREE.Vector3(100, 0, -2 * CURVE_DISTANCE),
-      new THREE.Vector3(-100, 0, -3 * CURVE_DISTANCE),
-      new THREE.Vector3(100, 0, -4 * CURVE_DISTANCE),
-      new THREE.Vector3(0, 0, -5 * CURVE_DISTANCE),
-      new THREE.Vector3(0, 0, -6 * CURVE_DISTANCE),
-      new THREE.Vector3(0, 0, -7 * CURVE_DISTANCE),
-    ],
-    []
-  );
 
   const sceneOpacity = useRef(0);
   const lineMaterialRef = useRef();
 
   const curve = useMemo(() => {
     return new THREE.CatmullRomCurve3(curvePoints, false, "catmullrom", 0.5);
-  }, []);
+  }, [curvePoints]);
 
   const textSections = useMemo(() => {
     return [
@@ -50,8 +50,8 @@ export const Experience = () => {
           curvePoints[1].y,
           curvePoints[1].z
         ),
-        subtitle: `Welcome to Wawatmos,
-Have a seat and enjoy the ride!`,
+subtitle: `Welcome to Artful Excel,
+          Have a seat and enjoy the ride!`,
       },
       {
         cameraRailDist: 1.5,
@@ -72,7 +72,8 @@ We have a wide range of beverages!`,
           curvePoints[3].z
         ),
         title: "Fear of flying?",
-        subtitle: `Our flight attendants will help you have a great journey`,
+        subtitle: `Our flight attendants will help you 
+        have a great journey`,
       },
       {
         cameraRailDist: 1.5,

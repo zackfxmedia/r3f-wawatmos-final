@@ -6,14 +6,13 @@ export const Overlay = () => {
   const { play, end, setPlay, hasScroll } = usePlay();
   return (
     <div
-      className={`overlay ${play ? "overlay--disable" : ""}
-    ${hasScroll ? "overlay--scrolled" : ""}`}
+    className={`overlay ${play && "overlay--disable"} ${hasScroll && "overlay--scrolled"}`}
     >
       <div
-        className={`loader ${progress === 100 ? "loader--disappear" : ""}`}
-      />
+          className={`loader ${progress === 100 ? "loader--disappear" : ""}`}
+        >
       {progress === 100 && (
-        <div className={`intro ${play ? "intro--disappear" : ""}`}>
+        <div className={`intro ${play && "intro--disappear"}`}>
           <h1 className="logo">
             WAWATMOS
             <div className="spinner">
@@ -31,9 +30,10 @@ export const Overlay = () => {
           </button>
         </div>
       )}
-      <div className={`outro ${end ? "outro--appear" : ""}`}>
+      <div className={`outro ${end && "outro--appear"}`}>
         <p className="outro__text">Wish you had a great flight with us...</p>
       </div>
     </div>
+  </div>
   );
 };
